@@ -7,10 +7,15 @@
       </div> -->
       <div class="form-body">
         <input type="file" class="input-file" id="image" name="image" v-on:change="onFileChange" ref="file" multiple>
+        <span>Put your image here</span>
       </div>
-      <div v-if="url" class="form-preview">
-        <img :src="url" style="width: 50px" />
-        <p>{{ imageName }}</p>
+      <div class="form-preview">
+        <div v-for="(u, index) in url" :key="`u-${index}`">
+          <img :src="u" style="width: 50px" />
+        </div>
+        <div v-for="(f, index) in file" :key="`f-${index}`">
+          <p>{{ f.name }}</p>
+        </div>
       </div>
       <button>Add</button>
     </form>
@@ -24,21 +29,31 @@ export default {
   name: "Modal",
   data() {
     return {
-      file: "",
-      url: null,
+      file: [],
+      url: [],
       kotak: [],
       imageName: "",
     };
   },
   methods: {
     onFileChange(e) {
-      console.log(e.target.files);
-      console.log(e.target.files[0].name);
-      this.file = e.target.files[0];
-      this.imageName = e.target.files[0].name;
-      this.kotak = [...this.file];
-      console.log(this.kotak);
-      this.url = URL.createObjectURL(this.file);
+      console.log(e.target.files[1]);
+      let i = 0;
+      for (i = 0; i < e.target.files.length; i++) {
+        console.log(e.target.files[i]);
+        this.file.push(e.target.files[i]);
+        this.url.push(URL.createObjectURL(e.target.files[i]));
+        console.log(this.file);
+        console.log(this.url);
+      }
+      // this.file = e.target.files;
+      console.log(this.file);
+      // console.log(e.target.files[0].name);
+      // this.file = e.target.files[0];
+      // this.imageName = e.target.files[0].name;
+      // this.kotak = [...this.file];
+      // console.log(this.kotak);
+      // this.url = URL.createObjectURL(this.file);
     },
     testBind() {
       this.$emit("update");
@@ -47,22 +62,35 @@ export default {
       e.preventDefault();
       let currentObj = this;
 
+      console.log(this.file[0]);
+
       const config = {
         headers: { "content-type": "multipart/form-data" },
       };
 
-      let formData = new FormData();
-      formData.append("file", this.file);
+      let i = 0;
+      for (i = 0; i < this.file.length; i++) {
+        let formData = new FormData();
+        formData.append("file", this.file[i]);
 
-      axios
-        .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
-        .then(function(response) {
-          console.log(response);
-        })
-        .then(() => this.testBind())
-        .catch(function(error) {
-          currentObj.output = error;
-        });
+        console.log(this.file[i]);
+
+        axios
+          .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
+          .then(function(response) {
+            console.log(response);
+          });
+      }
+
+      // axios
+      //   .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
+      //   .then(function(response) {
+      //     console.log(response);
+      //   });
+      // .then(() => this.testBind())
+      // .catch(function(error) {
+      //   currentObj.output = error;
+      // });
     },
   },
 };
@@ -100,6 +128,9 @@ form {
   position: relative;
   cursor: pointer;
   margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-body:hover {
@@ -110,6 +141,7 @@ form {
   height: 30%;
   width: 80%;
   background-color: salmon;
+  display: flex;
 }
 
 input {

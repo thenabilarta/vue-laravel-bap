@@ -3042,7 +3042,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: 10%;\r\n  left: 10%;\r\n  position: absolute;\r\n  background: #f5f5f5;\r\n  min-height: 300px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\nform[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: pink;\r\n  position: absolute;\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-direction: column;\n}\n.form-body[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: powderblue;\r\n  position: relative;\r\n  cursor: pointer;\r\n  margin-top: 2rem;\n}\n.form-body[data-v-cdd68b04]:hover {\r\n  background-color: #f5f5f5;\n}\n.form-preview[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: salmon;\n}\ninput[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  cursor: pointer;\r\n  opacity: 0;\r\n  z-index: 3;\n}\r\n", ""]);
+exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: 10%;\r\n  left: 10%;\r\n  position: absolute;\r\n  background: #f5f5f5;\r\n  min-height: 300px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\nform[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: pink;\r\n  position: absolute;\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-direction: column;\n}\n.form-body[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: powderblue;\r\n  position: relative;\r\n  cursor: pointer;\r\n  margin-top: 2rem;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.form-body[data-v-cdd68b04]:hover {\r\n  background-color: #f5f5f5;\n}\n.form-preview[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: salmon;\r\n  display: flex;\n}\ninput[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  cursor: pointer;\r\n  opacity: 0;\r\n  z-index: 3;\n}\r\n", ""]);
 
 // exports
 
@@ -3055,8 +3055,11 @@ exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom:
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3083,8 +3086,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   name: "Modal",
   data: function data() {
     return {
-      file: "",
-      url: null,
+      file: [],
+      url: [],
       kotak: [],
       imageName: ""
     };
@@ -3092,37 +3095,58 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   methods: {
     onFileChange: function onFileChange(e) {
-      console.log(e.target.files);
-      console.log(e.target.files[0].name);
-      this.file = e.target.files[0];
-      this.imageName = e.target.files[0].name;
-      this.kotak = [].concat(_toConsumableArray(this.file));
-      console.log(this.kotak);
-      this.url = URL.createObjectURL(this.file);
+      console.log(e.target.files[1]);
+      var i = 0;
+      for (i = 0; i < e.target.files.length; i++) {
+        console.log(e.target.files[i]);
+        this.file.push(e.target.files[i]);
+        this.url.push(URL.createObjectURL(e.target.files[i]));
+        console.log(this.file);
+        console.log(this.url);
+      }
+      // this.file = e.target.files;
+      console.log(this.file);
+      // console.log(e.target.files[0].name);
+      // this.file = e.target.files[0];
+      // this.imageName = e.target.files[0].name;
+      // this.kotak = [...this.file];
+      // console.log(this.kotak);
+      // this.url = URL.createObjectURL(this.file);
     },
     testBind: function testBind() {
       this.$emit("update");
     },
     formSubmit: function formSubmit(e) {
-      var _this = this;
-
       e.preventDefault();
       var currentObj = this;
+
+      console.log(this.file[0]);
 
       var config = {
         headers: { "content-type": "multipart/form-data" }
       };
 
-      var formData = new FormData();
-      formData.append("file", this.file);
+      var i = 0;
+      for (i = 0; i < this.file.length; i++) {
+        var formData = new FormData();
+        formData.append("file", this.file[i]);
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("http://127.0.0.1:8000/panel/addmedia", formData, config).then(function (response) {
-        console.log(response);
-      }).then(function () {
-        return _this.testBind();
-      }).catch(function (error) {
-        currentObj.output = error;
-      });
+        console.log(this.file[i]);
+
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("http://127.0.0.1:8000/panel/addmedia", formData, config).then(function (response) {
+          console.log(response);
+        });
+      }
+
+      // axios
+      //   .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
+      //   .then(function(response) {
+      //     console.log(response);
+      //   });
+      // .then(() => this.testBind())
+      // .catch(function(error) {
+      //   currentObj.output = error;
+      // });
     }
   }
 });
@@ -3149,19 +3173,29 @@ var render = function() {
             staticClass: "input-file",
             attrs: { type: "file", id: "image", name: "image", multiple: "" },
             on: { change: _vm.onFileChange }
-          })
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("Put your image here")])
         ]),
         _vm._v(" "),
-        _vm.url
-          ? _c("div", { staticClass: "form-preview" }, [
-              _c("img", {
-                staticStyle: { width: "50px" },
-                attrs: { src: _vm.url }
-              }),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.imageName))])
-            ])
-          : _vm._e(),
+        _c(
+          "div",
+          { staticClass: "form-preview" },
+          [
+            _vm._l(_vm.url, function(u, index) {
+              return _c("div", { key: "u-" + index }, [
+                _c("img", { staticStyle: { width: "50px" }, attrs: { src: u } })
+              ])
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.file, function(f, index) {
+              return _c("div", { key: "f-" + index }, [
+                _c("p", [_vm._v(_vm._s(f.name))])
+              ])
+            })
+          ],
+          2
+        ),
         _vm._v(" "),
         _c("button", [_vm._v("Add")])
       ]
