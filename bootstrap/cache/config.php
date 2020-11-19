@@ -282,7 +282,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -322,7 +322,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\database\\laravelvue',
+        'database' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\database\\laravelvue',
         'prefix' => '',
       ),
       'mysql' => 
@@ -501,7 +501,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\debugbar',
+      'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
     ),
@@ -597,7 +597,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\cache',
+      'dir' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -663,7 +663,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\exports',
+        'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -673,15 +673,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
@@ -849,12 +849,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\app',
+        'root' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\app/public',
+        'root' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\app/public',
         'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
@@ -903,7 +903,7 @@
     'include_helpers' => false,
     'helper_files' => 
     array (
-      0 => 'C:\\Users\\thena\\Desktop\\laravel_bap/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+      0 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
     ),
     'model_locations' => 
     array (
@@ -1177,8 +1177,8 @@
       'uppercase' => false,
       'fonts' => 
       array (
-        0 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\config\\laravolt/../fonts/OpenSans-Bold.ttf',
-        1 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\config\\laravolt/../fonts/rockwell.ttf',
+        0 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\config\\laravolt/../fonts/OpenSans-Bold.ttf',
+        1 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\config\\laravolt/../fonts/rockwell.ttf',
       ),
       'foregrounds' => 
       array (
@@ -1228,7 +1228,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -1238,7 +1238,7 @@
     'stubs' => 
     array (
       'enabled' => false,
-      'path' => 'C:\\Users\\thena\\Desktop\\laravel_bap/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
         'start' => 'start.php',
@@ -1292,9 +1292,9 @@
     ),
     'paths' => 
     array (
-      'modules' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\Modules',
-      'assets' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\public\\modules',
-      'migration' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\database/migrations',
+      'modules' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\Modules',
+      'assets' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\public\\modules',
+      'migration' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\database/migrations',
       'generator' => 
       array (
         'config' => 
@@ -1419,8 +1419,8 @@
       'enabled' => true,
       'paths' => 
       array (
-        0 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\vendor/*/*',
-        1 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\Modules/*/*',
+        0 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\vendor/*/*',
+        1 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\Modules/*/*',
       ),
     ),
     'composer' => 
@@ -1451,7 +1451,7 @@
     array (
       0 => 'local',
     ),
-    'public_path' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\public',
+    'public_path' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\public',
     'asset' => 'http://localhost:8000',
     'cache_folder' => '/storage/cache/',
     'check_timestamps' => true,
@@ -1613,9 +1613,9 @@
     ),
     'generator' => 
     array (
-      'basePath' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\app',
+      'basePath' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\app',
       'rootNamespace' => 'App\\',
-      'stubsOverridePath' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\app',
+      'stubsOverridePath' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\app',
       'paths' => 
       array (
         'models' => 'Entities',
@@ -1660,7 +1660,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -1754,9 +1754,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\thena\\Desktop\\laravel_bap\\resources\\views',
+      0 => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\thena\\Desktop\\laravel_bap\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\thena\\Desktop\\vue-laravel-bap\\storage\\framework\\views',
   ),
   'laravel-model-caching' => 
   array (

@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 
 class PanelController extends AppBaseController
 {
-    public $access_token = 'cNRplyN7EB6iozLeGnwrcXcS6HWVQrseQqlREkCn';
+    public $access_token = 'DobDJnDkHg8Wheh8mQtM2aNfUYBVrDnWiXPpZpFG';
 
     public function index()
     {
@@ -20,7 +20,7 @@ class PanelController extends AppBaseController
 
     public function data()
     {
-        $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         $headers = [
             'Authorization' => 'Bearer ' . $this->access_token,
@@ -53,7 +53,7 @@ class PanelController extends AppBaseController
 
         $imageName = explode("/", $imagePath);
 
-        $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         $headers = [
             'Authorization' => 'Bearer ' . $this->access_token,
@@ -67,7 +67,7 @@ class PanelController extends AppBaseController
             ],
             [
                 'name' => 'files',
-                'contents' => fopen('C:/Users/thena/Desktop/laravel_bap/storage/app/public/' . $imagePath, 'r')
+                'contents' => fopen('C:/Users/thena/Desktop/vue-laravel-bap/storage/app/public/' . $imagePath, 'r')
             ]
         ];
 
@@ -89,15 +89,15 @@ class PanelController extends AppBaseController
             'type' => '',
             'duration' => '',
         );
-        
-        if ( !isset($content["files"][0]["error"])) {
+
+        if (!isset($content["files"][0]["error"])) {
             $panel = Panel::create($form_data);
 
             $panels = $panel->getAttributes();
 
             $panelmediaid = Panel::find($panels["id"]);
 
-            if($panelmediaid) {
+            if ($panelmediaid) {
                 $panelmediaid->media_id = $content["files"][0]["mediaId"];
                 $panelmediaid->retired = $content["files"][0]["retired"];
                 $panelmediaid->size = $content["files"][0]["size"];
@@ -112,7 +112,7 @@ class PanelController extends AppBaseController
 
         // $imageName = explode("/", $imagePath);
 
-        // $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        // $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         // $headers = [
         //     'Authorization' => 'Bearer ' . $this->access_token,
@@ -148,7 +148,7 @@ class PanelController extends AppBaseController
         //     'type' => '',
         //     'duration' => '',
         // );
-        
+
         // if ( !isset($content["files"][0]["error"])) {
         //     $panel = Panel::create($form_data);
 
@@ -165,14 +165,14 @@ class PanelController extends AppBaseController
         //         $panelmediaid->save();
         //     }
         // }
-        
+
         // foreach ($files as $file) {
         //     $fileName = $file->getClientOriginalName();
         //     $imagePath = $file->store('uploads', 'public');
 
         //     $imageName = explode("/", $imagePath);
 
-        //     $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        //     $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         //     $headers = [
         //         'Authorization' => 'Bearer ' . $this->access_token,
@@ -208,7 +208,7 @@ class PanelController extends AppBaseController
         //         'type' => '',
         //         'duration' => '',
         //     );
-            
+
         //     if ( !isset($content["files"][0]["error"])) {
         //         $panel = Panel::create($form_data);
 
@@ -237,7 +237,7 @@ class PanelController extends AppBaseController
 
         //         $imageName = explode("/", $imagePath);
 
-        //         $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        //         $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         //         $headers = [
         //             'Authorization' => 'Bearer ' . $this->access_token,
@@ -273,7 +273,7 @@ class PanelController extends AppBaseController
         //             'type' => '',
         //             'duration' => '',
         //         );
-                
+
         //         if ( !isset($content["files"][0]["error"])) {
         //             $panel = Panel::create($form_data);
 
@@ -321,7 +321,7 @@ class PanelController extends AppBaseController
         //     $xiboimagename->save();
         // }
 
-        $client = new Client(['base_uri' => 'http://192.168.44.127']);
+        $client = new Client(['base_uri' => 'http://192.168.1.5']);
 
         $headers = [
             'Authorization' => 'Bearer ' . $this->access_token,
@@ -336,7 +336,7 @@ class PanelController extends AppBaseController
             'updateInLayouts' => '0'
         ];
 
-        $response = $client->request('PUT', '/xibo-cms/web/api/library/' . $media_id_real , [
+        $response = $client->request('PUT', '/xibo-cms/web/api/library/' . $media_id_real, [
             'headers' => $headers,
             'form_params' => $formparams
         ]);
@@ -346,7 +346,7 @@ class PanelController extends AppBaseController
         if ($status === 200) {
             $panelimagename = Panel::where('media_id', $media_id_real)->firstOrFail();
 
-            if($panelimagename) {    
+            if ($panelimagename) {
                 $panelimagename->image_name = $newfilename . '.' . $media_type_real;
                 $panelimagename->save();
             }
@@ -363,7 +363,7 @@ class PanelController extends AppBaseController
 
         $client = new Client();
 
-        $url = 'http://192.168.44.127/xibo-cms/web/api/library/' . $panel->media_id;
+        $url = 'http://192.168.1.5/xibo-cms/web/api/library/' . $panel->media_id;
 
         $response = $client->delete($url, [
             'headers'  => [

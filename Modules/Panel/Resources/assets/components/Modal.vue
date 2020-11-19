@@ -58,29 +58,47 @@ export default {
     testBind() {
       this.$emit("update");
     },
-    formSubmit(e) {
-      e.preventDefault();
-      let currentObj = this;
+    uploadImages() {
+      const promises = Array.from(this.file).map(f => {
+        const config = {
+          headers: { "content-type": "multipart/form-data" },
+        };
 
-      console.log(this.file[0]);
-
-      const config = {
-        headers: { "content-type": "multipart/form-data" },
-      };
-
-      let i = 0;
-      for (i = 0; i < this.file.length; i++) {
         let formData = new FormData();
-        formData.append("file", this.file[i]);
+        formData.append("file", f);
 
-        console.log(this.file[i]);
-
-        axios
-          .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
+        return axios.post("http://127.0.0.1:8000/panel/addmedia", formData, config)
           .then(function(response) {
             console.log(response);
           });
-      }
+      });
+
+      return Promise.all(promises);
+    },
+    async formSubmit(e) {
+      e.preventDefault();
+
+      await this.uploadImages();
+
+      await this.testBind();
+
+      // console.log(this.file[0]);
+
+      // const config = {
+      //   headers: { "content-type": "multipart/form-data" },
+      // };
+
+      // let formData = new FormData();
+      // formData.append("file", this.file[i]);
+
+      // console.log(this.file[i]);
+
+      // axios
+      //   .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
+      //   .then(function(response) {
+      //     console.log(response);
+      //   });
+      
 
       // axios
       //   .post("http://127.0.0.1:8000/panel/addmedia", formData, config)
