@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 
 class PanelController extends AppBaseController
 {
-    public $access_token = 'aAsdMCyPtsPvFiTQjraLBWpUck41mV4H1f0C1m2D';
+    public $access_token = 'LUn4YHHFyuSCwsZGKDZukT8o23tGd0umrWeYdVNs';
 
     public function index()
     {
@@ -108,5 +108,88 @@ class PanelController extends AppBaseController
         }
 
         return $content;
+    }
+
+    public function edit($id)
+    {
+        $panel = Panel::where('media_id', $id)->firstOrFail();
+
+        return $panel;
+    }
+
+    public function editstore(Request $request)
+    {
+        $newfilename = $request->name;
+
+        $media_id = $request->media_id["image_name"];
+
+        $media_id_real = $request->media_id["media_id"];
+
+        $media_type = explode('.', $media_id);
+
+        $media_type_real = $media_type[1];
+
+        // Make sure you've got the model
+        // if($xiboimagename) {
+        //     $xiboimagename->image_name = $request->image_name . '.' . $request->image_type;
+        //     $xiboimagename->save();
+        // }
+
+        $client = new Client(['base_uri' => 'http://192.168.44.127']);
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $this->access_token,
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ];
+
+        $formparams = [
+            'name' => $newfilename . '.' . $media_type_real,
+            'duration' => '10',
+            'retired' => '0',
+            'tags' => '0',
+            'updateInLayouts' => '0'
+        ];
+
+        $response = $client->request('PUT', '/xibo-cms/web/api/library/' . $media_id_real , [
+            'headers' => $headers,
+            'form_params' => $formparams
+        ]);
+
+        $status = $response->getStatusCode();
+
+        if ($status === 200) {
+            $panelimagename = Panel::where('media_id', $media_id_real)->firstOrFail();
+
+            if($panelimagename) {    
+                $panelimagename->image_name = $newfilename . '.' . $media_type_real;
+                $panelimagename->save();
+            }
+        }
+
+        return response()->json(["status" => "ok"]);
+    }
+
+    public function delete($id)
+    {
+        $panel = Panel::where('media_id', $id)->firstOrFail();
+
+        // return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+
+        $client = new Client();
+
+        $url = 'http://192.168.44.127/xibo-cms/web/api/library/' . $panel->media_id;
+
+        $response = $client->delete($url, [
+            'headers'  => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json'
+            ]
+        ]);
+
+        if ($response->getStatusCode() === 204) {
+            $panel->delete();
+        }
+
+        return response()->json(["status" => "ok"]);
     }
 }

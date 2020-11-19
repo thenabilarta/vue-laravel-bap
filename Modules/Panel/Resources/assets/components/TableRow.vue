@@ -12,19 +12,55 @@
     <td>null</td>
     <td>{{ media.image_database_name }}</td>
     <td>
-      <select name="" id="">
-        <option value="">-</option>
-        <option value="">Edit</option>
-        <option value="">Delete</option>
-      </select>
+      <button @click="toEdit">Edit</button>
     </td>
+    <td>
+      <button @click="toDelete">Delete</button>
+    </td>
+    <ModalEdit v-on:updateEdit="testBind" v-if="editing" v-bind:showdata="showdata"></ModalEdit>
   </tr>
 </template>
 
 <script>
+import axios from "axios";
+
+import ModalEdit from "./ModalEdit";
+
 export default {
   name: "TableRow",
   props: ["media"],
+  components: {
+    ModalEdit: ModalEdit,
+  },
+  data() {
+    return {
+      mediaProps: this.media,
+      editing: false,
+      showdata: {},
+    };
+  },
+  methods: {
+    toDelete() {
+      console.log(this.mediaProps.media_id);
+      axios
+        .get("http://127.0.0.1:8000/panel/delete/" + this.mediaProps.media_id)
+        .then(() => this.testBind());
+    },
+    testBind() {
+      this.$emit("update");
+    },
+    toEdit() {
+      this.editing = !this.editing;
+      this.toShow();
+    },
+    toShow() {
+      console.log(this.mediaProps.media_id);
+      axios
+        .get("http://127.0.0.1:8000/panel/edit/" + this.mediaProps.media_id)
+        .then((res) => (this.showdata = res.data))
+        .then(() => console.log(this.showdata));
+    },
+  },
 };
 </script>
 

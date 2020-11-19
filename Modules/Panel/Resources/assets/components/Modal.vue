@@ -1,15 +1,18 @@
 <template>
   <div class="modal">
     <form @submit="formSubmit" enctype="multipart/form-data">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="">Image Name</label>
         <input type="text" class="form-control" name="image-name">
+      </div> -->
+      <div class="form-body">
+        <input type="file" class="input-file" id="image" name="image" v-on:change="onFileChange" ref="file" multiple>
       </div>
-      <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" class="form-control-file" id="image" name="image" v-on:change="onFileChange" ref="file">
+      <div class="form-preview" v-for="(f, index) in file" :key="`f-${index}`">
+        <img :src="url" style="width: 50px" />
+        <p>{{ f.name }}</p>
       </div>
-      <button class="btn btn-primary">Add</button>
+      <button>Add</button>
     </form>
   </div>
 </template>
@@ -22,12 +25,16 @@ export default {
   data() {
     return {
       file: "",
+      url: [],
+      kotak: [],
     };
   },
   methods: {
     onFileChange(e) {
-      console.log(e.target.files[0]);
+      console.log(e.target.files);
       this.file = e.target.files[0];
+      this.kotak = [...this.file];
+      this.url = URL.createObjectURL(this.file);
     },
     testBind() {
       this.$emit("update");
@@ -69,5 +76,44 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+form {
+  width: 100%;
+  height: 100%;
+  background-color: pink;
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-body {
+  height: 30%;
+  width: 80%;
+  background-color: powderblue;
+  position: relative;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.form-body:hover {
+  background-color: #f5f5f5;
+}
+
+.form-preview {
+  height: 30%;
+  width: 80%;
+  background-color: salmon;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 3;
 }
 </style>

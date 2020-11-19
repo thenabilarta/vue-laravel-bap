@@ -1577,6 +1577,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1610,8 +1611,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       this.modal = false;
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1:8000/panel/data").then(function (res) {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1:8000/panel/main").then(function (res) {
         return _this2.medias = res.data;
+      });
+    },
+    onDelete: function onDelete() {
+      var _this3 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1:8000/panel/main").then(function (res) {
+        return _this3.medias = res.data;
       });
     }
   }
@@ -2582,6 +2590,10 @@ exports.push([module.i, "\n#image-thumbnail[data-v-4835156b] {\r\n  max-width: 5
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalEdit__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ModalEdit__);
 //
 //
 //
@@ -2606,9 +2618,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TableRow",
-  props: ["media"]
+  props: ["media"],
+  components: {
+    ModalEdit: __WEBPACK_IMPORTED_MODULE_1__ModalEdit___default.a
+  },
+  data: function data() {
+    return {
+      mediaProps: this.media,
+      editing: false,
+      showdata: {}
+    };
+  },
+
+  methods: {
+    toDelete: function toDelete() {
+      var _this = this;
+
+      console.log(this.mediaProps.media_id);
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1:8000/panel/delete/" + this.mediaProps.media_id).then(function () {
+        return _this.testBind();
+      });
+    },
+    testBind: function testBind() {
+      this.$emit("update");
+    },
+    toEdit: function toEdit() {
+      this.editing = !this.editing;
+      this.toShow();
+    },
+    toShow: function toShow() {
+      var _this2 = this;
+
+      console.log(this.mediaProps.media_id);
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1:8000/panel/edit/" + this.mediaProps.media_id).then(function (res) {
+        return _this2.showdata = res.data;
+      }).then(function () {
+        return console.log(_this2.showdata);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2620,55 +2674,57 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.media
-    ? _c("tr", [
-        _c("th", { attrs: { scope: "row" } }, [
-          _vm._v(_vm._s(_vm.media.media_id))
-        ]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.media.image_name))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.media.type))]),
-        _vm._v(" "),
-        _c("td", [
-          _c("img", {
-            attrs: {
-              src: "storage/" + _vm.media.image_path,
-              alt: "image",
-              id: "image-thumbnail"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.media.duration))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.media.size))]),
-        _vm._v(" "),
-        _c("td", [_vm._v("media.owner")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("null")]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.media.image_database_name))]),
-        _vm._v(" "),
-        _vm._m(0)
-      ])
+    ? _c(
+        "tr",
+        [
+          _c("th", { attrs: { scope: "row" } }, [
+            _vm._v(_vm._s(_vm.media.media_id))
+          ]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(_vm.media.image_name))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(_vm.media.type))]),
+          _vm._v(" "),
+          _c("td", [
+            _c("img", {
+              attrs: {
+                src: "storage/" + _vm.media.image_path,
+                alt: "image",
+                id: "image-thumbnail"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(_vm.media.duration))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(_vm.media.size))]),
+          _vm._v(" "),
+          _c("td", [_vm._v("media.owner")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("null")]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(_vm.media.image_database_name))]),
+          _vm._v(" "),
+          _c("td", [
+            _c("button", { on: { click: _vm.toEdit } }, [_vm._v("Edit")])
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("button", { on: { click: _vm.toDelete } }, [_vm._v("Delete")])
+          ]),
+          _vm._v(" "),
+          _vm.editing
+            ? _c("ModalEdit", {
+                attrs: { showdata: _vm.showdata },
+                on: { updateEdit: _vm.testBind }
+              })
+            : _vm._e()
+        ],
+        1
+      )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("select", { attrs: { name: "", id: "" } }, [
-        _c("option", { attrs: { value: "" } }, [_vm._v("-")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("Edit")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("Delete")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -2764,7 +2820,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: 10%;\r\n  left: 10%;\r\n  position: absolute;\r\n  background: #f5f5f5;\r\n  min-height: 300px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: 10%;\r\n  left: 10%;\r\n  position: absolute;\r\n  background: #f5f5f5;\r\n  min-height: 300px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\nform[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: pink;\r\n  position: absolute;\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-direction: column;\n}\n.form-body[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: powderblue;\r\n  position: relative;\r\n  cursor: pointer;\r\n  margin-top: 2rem;\n}\n.form-body[data-v-cdd68b04]:hover {\r\n  background-color: #f5f5f5;\n}\n.form-preview[data-v-cdd68b04] {\r\n  height: 30%;\r\n  width: 80%;\r\n  background-color: salmon;\n}\ninput[data-v-cdd68b04] {\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  cursor: pointer;\r\n  opacity: 0;\r\n  z-index: 3;\n}\r\n", ""]);
 
 // exports
 
@@ -2777,6 +2833,11 @@ exports.push([module.i, "\n.modal[data-v-cdd68b04] {\r\n  top: 10%;\r\n  bottom:
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+//
+//
+//
 //
 //
 //
@@ -2800,14 +2861,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: "Modal",
   data: function data() {
     return {
-      file: ""
+      file: "",
+      url: [],
+      kotak: []
     };
   },
 
   methods: {
     onFileChange: function onFileChange(e) {
-      console.log(e.target.files[0]);
+      console.log(e.target.files);
       this.file = e.target.files[0];
+      this.kotak = [].concat(_toConsumableArray(this.file));
+      this.url = URL.createObjectURL(this.file);
     },
     testBind: function testBind() {
       this.$emit("update");
@@ -2852,39 +2917,33 @@ var render = function() {
         on: { submit: _vm.formSubmit }
       },
       [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "image" } }, [_vm._v("Image")]),
-          _vm._v(" "),
+        _c("div", { staticClass: "form-body" }, [
           _c("input", {
             ref: "file",
-            staticClass: "form-control-file",
-            attrs: { type: "file", id: "image", name: "image" },
+            staticClass: "input-file",
+            attrs: { type: "file", id: "image", name: "image", multiple: "" },
             on: { change: _vm.onFileChange }
           })
         ]),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Add")])
-      ]
+        _vm._l(_vm.file, function(f, index) {
+          return _c("div", { key: "f-" + index, staticClass: "form-preview" }, [
+            _c("img", {
+              staticStyle: { width: "50px" },
+              attrs: { src: _vm.url }
+            }),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(f.name))])
+          ])
+        }),
+        _vm._v(" "),
+        _c("button", [_vm._v("Add")])
+      ],
+      2
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "" } }, [_vm._v("Image Name")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "image-name" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -2919,7 +2978,11 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.medias, function(media) {
-              return _c("TableRow", { key: media.id, attrs: { media: media } })
+              return _c("TableRow", {
+                key: media.id,
+                attrs: { media: media },
+                on: { update: _vm.onDelete }
+              })
             })
           )
         ])
@@ -2952,6 +3015,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Permission")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("File Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } })
       ])
@@ -14195,6 +14260,227 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(53)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-86dbd6b0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "modules\\panel\\resources\\assets\\components\\ModalEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-86dbd6b0", Component.options)
+  } else {
+    hotAPI.reload("data-v-86dbd6b0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(54);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("8873afea", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-86dbd6b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalEdit.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-86dbd6b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalEdit.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal[data-v-86dbd6b0] {\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: 20%;\r\n  opacity: 0.9;\r\n  left: 0;\r\n  position: absolute;\r\n  background: #f5f5f5;\r\n  min-height: 300px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\n#image-thumbnail[data-v-86dbd6b0] {\r\n  max-width: 50px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ModalEdit",
+  props: { showdata: Object },
+  computed: {
+    imageString: function imageString() {
+      if (this.showdata.image_name) {
+        var name = this.showdata.image_name;
+        var newName = name.split(".");
+        return newName[0];
+      }
+    },
+    angka: function angka() {
+      if (this.showdata.media_id) {
+        return this.showdata.media_id;
+      }
+    }
+  },
+  data: function data() {
+    return {
+      form: {
+        name: "",
+        media_id: ""
+      }
+    };
+  },
+
+  watch: {
+    showdata: function showdata() {
+      this.form.media_id = this.showdata;
+    }
+  },
+  methods: {
+    formSubmit: function formSubmit(e) {
+      var _this = this;
+
+      e.preventDefault();
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("http://127.0.0.1:8000/panel/edit/store", this.form).then(function () {
+        return _this.modalEditBind();
+      });
+    },
+    modalEditBind: function modalEditBind() {
+      this.$emit("updateEdit");
+    }
+  }
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.showdata
+    ? _c("div", { staticClass: "modal" }, [
+        _c("img", {
+          attrs: {
+            src: "storage/" + _vm.showdata.image_path,
+            alt: "image",
+            id: "image-thumbnail"
+          }
+        }),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.showdata.image_name))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.showdata.media_id))]),
+        _vm._v(" "),
+        _c("form", { on: { submit: _vm.formSubmit } }, [
+          _vm.imageString
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.name,
+                    expression: "form.name"
+                  }
+                ],
+                attrs: { type: "text", placeholder: _vm.imageString },
+                domProps: { value: _vm.form.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "name", $event.target.value)
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("button", [_vm._v("Save")])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-86dbd6b0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

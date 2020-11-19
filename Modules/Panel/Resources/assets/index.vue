@@ -18,10 +18,11 @@
             <th scope="col">Permission</th>
             <th scope="col">File Name</th>
             <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <TableRow v-for="media in medias" v-bind:key="media.id" v-bind:media="media"></TableRow>
+          <TableRow v-for="media in medias" v-bind:key="media.id" v-bind:media="media" v-on:update="onDelete"></TableRow>
         </tbody>
       </table>
     </div>
@@ -57,7 +58,12 @@ export default {
     onUpdate() {
       this.modal = false;
       axios
-        .get("http://127.0.0.1:8000/panel/data")
+        .get("http://127.0.0.1:8000/panel/main")
+        .then((res) => (this.medias = res.data));
+    },
+    onDelete() {
+      axios
+        .get("http://127.0.0.1:8000/panel/main")
         .then((res) => (this.medias = res.data));
     },
   },
