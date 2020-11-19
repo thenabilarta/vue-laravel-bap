@@ -48,6 +48,7 @@ export default {
     },
     testBind() {
       this.$emit("update");
+      this.editing = false;
     },
     toEdit() {
       this.editing = !this.editing;

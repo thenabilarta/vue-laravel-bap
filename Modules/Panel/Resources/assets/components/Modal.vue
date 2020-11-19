@@ -8,9 +8,9 @@
       <div class="form-body">
         <input type="file" class="input-file" id="image" name="image" v-on:change="onFileChange" ref="file" multiple>
       </div>
-      <div class="form-preview" v-for="(f, index) in file" :key="`f-${index}`">
+      <div v-if="url" class="form-preview">
         <img :src="url" style="width: 50px" />
-        <p>{{ f.name }}</p>
+        <p>{{ imageName }}</p>
       </div>
       <button>Add</button>
     </form>
@@ -25,15 +25,19 @@ export default {
   data() {
     return {
       file: "",
-      url: [],
+      url: null,
       kotak: [],
+      imageName: "",
     };
   },
   methods: {
     onFileChange(e) {
       console.log(e.target.files);
+      console.log(e.target.files[0].name);
       this.file = e.target.files[0];
+      this.imageName = e.target.files[0].name;
       this.kotak = [...this.file];
+      console.log(this.kotak);
       this.url = URL.createObjectURL(this.file);
     },
     testBind() {
