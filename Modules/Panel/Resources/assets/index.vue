@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <TableRow v-for="media in medias" v-bind:key="media.id" v-bind:media="media" v-on:update="onDelete"></TableRow>
+          <TableRow v-for="(media) in medias" v-bind:key="media.id" v-bind:media="media" v-on:update="onDelete"></TableRow>
         </tbody>
       </table>
     </div>

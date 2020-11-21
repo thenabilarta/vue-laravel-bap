@@ -18,7 +18,7 @@
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:HWatbotxPP3nDXY+zxF6K/bCQfFR+tkbPUOD8/GIbt4=',
+    'key' => 'base64:p41BG7biPazmJTvkdU/uru8tDzS644/PDhQynxC12TE=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'log_level' => 'debug',

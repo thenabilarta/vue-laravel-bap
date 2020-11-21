@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 
 class PanelController extends AppBaseController
 {
-    public $access_token = 'DobDJnDkHg8Wheh8mQtM2aNfUYBVrDnWiXPpZpFG';
+    public $access_token = 'HGm3okfIioJf09WAs6ABmVgmVzI7I8cQ0VbQNDah';
 
     public function index()
     {
